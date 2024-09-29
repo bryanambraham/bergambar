@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('commissions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('service_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['pending', 'accepted', 'completed']);
             $table->decimal('total_price', 8, 2);
-            $table->date('start_date');
-            $table->date('deadline');
+            $table->string('description');
+            $table->string('image')->nullable(); // Menyimpan path gambar
             $table->timestamps();
         });
     }
+    
     
     /**
      * Reverse the migrations.

@@ -7,20 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Commission extends Model
 {
-    protected $fillable = ['user_id', 'service_id', 'status', 'total_price', 'start_date', 'deadline'];
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'status',
+        'total_price',
+        'description',
+        'image',
+    ];
+    
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function service()
-    {
-        return $this->belongsTo(Service::class);
-    }
+    // public function service()
+    // {
+    //     return $this->belongsTo(Service::class);
+    // }
 
-    public function payments()
-    {
-        return $this->hasMany(Payment::class);
-    }
+    // public function payments()
+    // {
+    //     return $this->hasMany(Payment::class);
+    // }
 }

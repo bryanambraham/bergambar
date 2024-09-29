@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CommissionController;
@@ -10,36 +11,46 @@ use Illuminate\Support\Facades\Auth;
 
 /*
 |---------------------------------------------------------------------------
-| Web Routes
+// Rute Web
 |---------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
+// 
+| Di sini adalah tempat untuk mendaftarkan rute web untuk aplikasi kamu.
+// Rute ini dimuat oleh RouteServiceProvider dalam grup yang 
+| berisi grup middleware "web". Sekarang buat sesuatu yang hebat!
+// 
 */
 
-// Halaman utama (welcome page)
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [CardController::class, 'welcome'])->name('welcome');
 
-// Route untuk resource User
+// Rute untuk resource User
 Route::resource('users', UserController::class)->middleware('auth');
 
-// Route untuk resource lainnya
+// Rute untuk resource lainnya
 Route::resource('artists', ArtistController::class);
 Route::resource('services', ServiceController::class);
-Route::resource('commissions', CommissionController::class);
 Route::resource('payments', PaymentController::class);
+
+// Rute untuk resource Komisi
+Route::resource('commissions', CommissionController::class)->middleware('auth');
 
 // Profil user, hanya bisa diakses oleh user yang sudah login
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth')->name('profile');
 
-// Aktifkan semua route autentikasi Laravel (login, register, dll.)
+// Aktifkan semua rute autentikasi Laravel (login, register, dll.)
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::get('/commissions', [CommissionController::class, 'create'])->name('commissions.index');
+Route::put('/commissions', [CommissionController::class, 'store'])->name('commissions.store');
+Route::post('/commissions', [CommissionController::class, 'store'])->name('commissions.store');
+// Menampilkan commission berdasarkan user_id
+Route::get('/commissions/user/{userId}', [CommissionController::class, 'showCommissionsByUser'])->name('commissions.byUser');
+
+// Edit commission
+Route::get('/commissions/{commission}/edit', [CommissionController::class, 'edit'])->name('commissions.edit');
+
+// Hapus commission
+Route::delete('/commissions/{commission}', [CommissionController::class, 'destroy'])->name('commissions.destroy');
 

@@ -1,18 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
+<body style="background-color: #1e1e2a;">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+            <div class="card" style="background-color: #5d5875;">
+                <div class="card-header text-white fw-bold" >{{ __('Register') }}</div>
 
-                <div class="card-body">
+                <div class="card-body text-white" style="background-color: #1e1e2a;">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
+                        <!-- Tambahkan Input Username -->
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                            <label for="username" class="col-md-4 col-form-label text-md-end text-white">{{ __('Username') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+
+                                @error('username')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <!-- End Input Username -->
+
+                        <!-- Input Name -->
+                        <div class="row mb-3">
+                            <label for="name" class="col-md-4 col-form-label text-md-end text-white">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -25,6 +43,7 @@
                             </div>
                         </div>
 
+                        <!-- Input Email -->
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
@@ -39,6 +58,7 @@
                             </div>
                         </div>
 
+                        <!-- Input Password -->
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
@@ -53,6 +73,7 @@
                             </div>
                         </div>
 
+                        <!-- Confirm Password -->
                         <div class="row mb-3">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
@@ -74,4 +95,5 @@
         </div>
     </div>
 </div>
+</body>
 @endsection

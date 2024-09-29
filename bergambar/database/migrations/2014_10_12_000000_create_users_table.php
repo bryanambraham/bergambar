@@ -17,10 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('username')->unique(); // Menambahkan kolom 'username'
+            $table->string('username')->unique()->after('email'); // Menambahkan kolom 'username'
             $table->string('bio')->nullable(); // Menambahkan kolom 'username'
-            $table->binary('profile_picture')->nullable(); 
-            $table->string('username')->unique(); // Menambahkan kolom 'username'
+            $table->string('profile_picture')->nullable(); 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -35,10 +34,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('username'); // Menghapus kolom 'username' jika di-rollback
-        });
-
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('users'); // Menghapus seluruh tabel users
     }
+
 };
