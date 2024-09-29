@@ -8,6 +8,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\OrderController;
 
 /*
 |---------------------------------------------------------------------------
@@ -54,3 +55,9 @@ Route::get('/commissions/{commission}/edit', [CommissionController::class, 'edit
 // Hapus commission
 Route::delete('/commissions/{commission}', [CommissionController::class, 'destroy'])->name('commissions.destroy');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+});
+
+Route::get('/commissions/{commission}/order', [OrderController::class, 'show'])->name('commissions.order');

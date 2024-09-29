@@ -79,19 +79,21 @@
                 <p class="text-white">No commissions available at the moment.</p>
             @else
                 @foreach($commissions as $commission)
-                    <div class="col-md-4">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $commission->description }}</h5>
-                                <p class="card-text">Status: {{ $commission->status }}</p>
-                                <p class="card-text">Price: ${{ $commission->total_price }}</p>
-                                
-                                @if($commission->image)
-                                    <img src="{{ asset('storage/' . $commission->image) }}" alt="Commission Image" class="img-fluid">
-                                @endif
-                            </div>
+                <div class="col-md-4">
+        <a href="{{ route('commissions.order', $commission->id) }}" class="text-decoration-none text-dark">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ $commission->description }}</h5>
+                <p class="card-text">Status: {{ $commission->status }}</p>
+                <p class="card-text">Price: ${{ $commission->total_price }}</p>
+                
+                @if($commission->image)
+                    <img src="{{ asset('storage/' . $commission->image) }}" alt="Commission Image" class="img-fluid">
+                @endif
                         </div>
                     </div>
+                </a>
+            </div>
                 @endforeach
             @endif
         </div>
