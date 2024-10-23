@@ -2,25 +2,27 @@
 @extends('layouts.app')
 
 @section('content')
-<body style="background-color: #1e1e2a;">
+<body style="background-color: #ffffff;">
+
+
     <div class="container d-flex justify-content-center align-items-center row-g-10">
         <div class="w-50">
-            <h1 class="text-center text-white fs-1 p-4">Create New Commission</h1>
+            <h1 class="text-center text-black fs-1 p-4">Create New Commission</h1>
 
     <form action="{{ route('commissions.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
-        <label for="description" class="text-white fs-3 p-3">Description</label>
+        <label for="description" class="text-black fs-3 p-3">Description</label>
         <input type="text" class="form-control" name="description" id="description" required>
     </div>
 
     <div class="form-group">
-        <label for="total_price" class="text-white fs-3 p-3">Total Price</label>
+        <label for="total_price" class="text-black fs-3 p-3">Total Price</label>
         <input type="number" class="form-control" name="total_price" id="total_price" required>
     </div>
 
     <div class="form-group">
-        <label for="status" class="text-white fs-3 p-3">Status</label>
+        <label for="status" class="text-black fs-3 p-3">Status</label>
         <select class="form-control" name="status" id="status" required>
             <option value="pending">Pending</option>
             <option value="accepted">Accepted</option>
@@ -29,7 +31,7 @@
     </div>
 
     <div class="form-group">
-        <label for="image" class="text-white fs-3 p-3">Upload Image</label>
+        <label for="image" class="text-black fs-3 p-3">Upload Image</label>
         <input type="file" class="form-control" name="image" id="image">
     </div>
     <div class="container p-5 align-items-center position-relative ">
@@ -41,10 +43,10 @@
         </div>
     </div>
 </body>
-    <!-- Footer -->
+    <!-- Footer
     <footer class="position-absolute bottom-0 text-white py-3 w-100" style="background-color: #252539;">
         <div class="container text-center">
             <small>&copy; 2024 Bergambar. All Rights Reserved.</small>
         </div>
-    </footer>
+    </footer> -->
 @endsection

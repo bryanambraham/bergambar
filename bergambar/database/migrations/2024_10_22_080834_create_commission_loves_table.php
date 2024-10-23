@@ -13,19 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('commissions', function (Blueprint $table) {
+        Schema::create('commission_loves', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('commission_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->enum('status', ['pending', 'accepted', 'completed']);
-            $table->decimal('total_price', 8, 2);
-            $table->string('description');
-            $table->string('image')->nullable(); // Menyimpan path gambar
             $table->timestamps();
-            $table->unsignedInteger('loved_count')->default(0);
         });
     }
-    
-    
+
     /**
      * Reverse the migrations.
      *
@@ -33,6 +28,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commissions');
+        Schema::dropIfExists('commission_love');
     }
+
+    
 };

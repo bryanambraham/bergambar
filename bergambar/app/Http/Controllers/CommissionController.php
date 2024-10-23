@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commission;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Tambahkan ini
 
@@ -112,4 +113,57 @@ class CommissionController extends Controller
         return redirect()->route('commissions.index')->with('success', 'Commission berhasil dihapus!');
     }
 
+    public function toggleLove($id)
+    {
+        $commission = Commission::findOrFail($id);
+        $user = auth()->user();
+    
+        // Cek apakah user sudah love commission ini
+        if ($commission->loves()->where('user_id', $user->id)->exists()) {
+            // Jika sudah love, kurangi loved_count
+            $commission->loved_count -= 1;
+            $commission->save();
+    
+            // Hapus love dari user ini di tabel pivot
+            $commission->loves()->detach($user->id);
+    
+            $loved = false;
+        } else {
+            // Jika belum love, tambahkan loved_count
+            $commission->loved_count += 1;
+            $commission->save();
+    
+            // Tambahkan love untuk user ini di tabel pivot
+            $commission->loves()->attach($user->id);
+    
+            $loved = true;
+        }
+    
+        // Return response dalam bentuk JSON
+        return response()->json([
+            'loved' => $loved,
+            'loved_count' => $commission->loved_count
+        ]);
+    }
+
+    public function addReview(Request $request, $id)
+    {
+        $request->validate([
+            'review' => 'required|string|max:255',
+        ]);
+    
+        // Cari commission berdasarkan ID
+        $commission = Commission::findOrFail($id);
+    
+        // Tambahkan review baru ke tabel reviews
+        Review::create([
+            'commission_id' => $commission->id,
+            'user_id' => auth()->user()->id, // ID user yang memberikan review
+            'review' => $request->review, // Isi review
+        ]);
+    
+        return back()->with('success', 'Review added successfully!');
+    }
+    
+    
 }

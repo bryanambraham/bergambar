@@ -9,10 +9,11 @@ class CardController extends Controller
 {
     public function welcome()
     {
-        // Ambil data commission dari database
-        $commissions = Commission::all();
+        // Ambil semua commission beserta user yang membuatnya
+        $commissions = Commission::with('user')->get();
         
-        // Kirimkan data commission ke view welcome.blade.php
+        // Kirim data commission ke view
         return view('welcome', compact('commissions'));
     }
+
 }

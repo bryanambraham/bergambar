@@ -48,6 +48,12 @@
                                     <label class="form-check-label text-white" for="remember">
                                         {{ __('Remember Me') }}
                                     </label>
+                                    
+                                    @if (Route::has('register'))
+                                    <a class="btn btn-link text-white" href="{{ route('register') }}">
+                                        {{ __('Don\'t have an account? Register here') }}
+                                    </a>
+                                    @endif     
                                 </div>
                             </div>
                         </div>
@@ -63,6 +69,8 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+
+                                
                             </div>
                         </div>
                     </form>

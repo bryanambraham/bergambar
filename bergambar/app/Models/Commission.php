@@ -17,10 +17,26 @@ class Commission extends Model
         'image',
     ];
     
-
+    
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function loves()
+    {
+        return $this->belongsToMany(User::class, 'commission_loves', 'commission_id', 'user_id')
+                    ->withTimestamps();
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     // public function service()

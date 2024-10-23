@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Artist;
-use Illuminate\Http\Request;
+use App\Models\Commission;
+use App\Models\User;
 
 class ArtistController extends Controller
 {
-    // Menampilkan daftar semua artist
     public function index()
     {
-        $artists = Artist::with('user')->get();
-        return view('artists.index', compact('artists'));
-    }
+        // Ambil semua user yang pernah mengunggah commission beserta commissions dan reviews
+        $artists = User::whereHas('commissions')->with('commissions.reviews.user')->get();
 
-    // Menampilkan detail artist tertentu
-    public function show($id)
-    {
-        $artist = Artist::with('services')->findOrFail($id);
-        return view('artists.show', compact('artist'));
+        // Kirimkan data artists ke view artists.index
+        return view('artists.index', compact('artists'));
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ChatController;
 
 /*
 |---------------------------------------------------------------------------
@@ -48,6 +49,9 @@ Route::put('/commissions', [CommissionController::class, 'store'])->name('commis
 Route::post('/commissions', [CommissionController::class, 'store'])->name('commissions.store');
 // Menampilkan commission berdasarkan user_id
 Route::get('/commissions/user/{userId}', [CommissionController::class, 'showCommissionsByUser'])->name('commissions.byUser');
+Route::post('/commissions/love/{id}', [CommissionController::class, 'toggleLove'])->name('commissions.toggleLove');
+Route::post('/commissions/{commission}/review', [CommissionController::class, 'addReview'])->name('commissions.addReview');
+
 
 // Edit commission
 Route::get('/commissions/{commission}/edit', [CommissionController::class, 'edit'])->name('commissions.edit');
@@ -61,3 +65,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/commissions/{commission}/order', [OrderController::class, 'show'])->name('commissions.order');
+
+Route::get('/chat/{artist}', [ChatController::class, 'show'])->name('chat.show')->middleware('auth');
+Route::post('/send-message', [ChatController::class, 'sendMessage']);
+
+
+Route::get('/chats', [ChatController::class, 'index'])->name('chat.index');
+
+// Route::get('/chat/{user}', [ChatController::class, 'show'])->name('chat.show')->middleware('auth');
+
+

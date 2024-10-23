@@ -1,72 +1,74 @@
-<!-- resources/views/orders/show.blade.php -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Details</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #1e1e2a;
-            color: #ffffff;
-        }
-        .order-card {
-            background-color: #3c3c4d;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-        }
-        .order-image {
-            border-radius: 10px;
-            width: 100%;
-            height: auto;
-            margin-bottom: 15px;
-        }
-        .order-buttons .btn {
-            margin-right: 10px;
-            background-color: #4a90e2;
-            border: none;
-        }
-        .order-buttons .btn:hover {
-            background-color: #357abd;
-        }
-        .text-muted {
-            color: #b2b2b2;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="w-100 top-0 navbar navbar-expand-lg navbar-dark shadow-sm mb-4" style="background-color: #252539;">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="{{ asset('assets/Logo.png') }}" class="img-fluid rounded" alt="Logo" style="width: 40px;">
-            </a>
-    </nav>
-    <div class="container my-5">
-        <div class="d-flex justify-content-center">
-            <div class="order-card col-md-6 text-center">
+@extends('layouts.app')
+
+@section('content')
+<div class="container my-5">
+        <div class="row justify-content-center">
+        <div class="row">
+            <!-- Kolom Gambar -->
+            <div class="col-md-6 text-center mb-4 mb-md-0">
+                <img src="{{ asset('storage/' . $commission->image) }}" alt="Commission Image" class="img-fluid rounded" style="max-width: 100%; height: auto;">
+            </div>
+
+            <!-- Kolom Detail dan Deskripsi -->
+            <div class="col-md-6">
                 <h2>{{ $commission->title }}</h2>
-                <img src="{{ asset('storage/' . $commission->image) }}" alt="Commission Image" class="order-image">
                 <p><strong>Artist:</strong> {{ $artist->name ?? 'placeholder' }}</p>
-                <p><strong>Title:</strong> {{ $commission->description ?? 'placeholder' }}</p>
-                <p><strong>Price:</strong> Rp. {{ number_format($commission->total_price, 0, ',', '.') }}</p>
-                
+                <p><strong>Description:</strong> {{ $commission->description ?? 'placeholder' }}</p>
+                <p><strong>Price:</strong> ${{ number_format($commission->total_price, 0, ',', '.') }}</p>
+
+                <!-- Tombol Order dan Chat -->
                 <div class="order-buttons mt-3">
-                    <a href="{{ route('orders.show', $commission->id) }}" class="btn btn-primary">Order Now</a>
-                    <a href="#" class="btn btn-primary">Chat User</a>
+                    <a href="{{ route('orders.show', $commission->id) }}" class="btn btn-primary me-2 mb-2">Order Now</a>
+                    <a href="{{ route('chat.show', $artist->id) }}" class="btn btn-success mb-2">Contact Artist</a>
                 </div>
             </div>
         </div>
+
+
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <h4>Comments</h4>
+
+                        @if($commission->reviews->isEmpty())
+                            <p>No Comments yet.</p>
+                        @else
+                            @foreach($commission->reviews as $review)
+                                <div class="review mb-4">
+                                    <strong>{{ $review->user->name ?? 'Unknown' }}</strong> <span class="text-warning">★</span>
+                                    <p>{{ $review->review }}</p>
+                                </div>
+                            @endforeach
+                        @endif
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- nambah review -->
+            @auth
+                <form action="{{ route('commissions.addReview', $commission->id) }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="review" class="form-label">Your Comment</label>
+                        <textarea name="review" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary d-flex ms-auto me-0">Submit Comment</button>
+                </form>
+            @endauth
+
+        </div>
     </div>
+
     
-    <footer class="position-fixed bottom-0 text-white py-3 mt-5 w-100" style="background-color: #252539;">
+    <!-- <footer class="position-fixed bottom-0 text-white py-3 mt-5 w-100" style="background-color: #252539;">
         <div class="container text-center">
             <small>&copy; 2024 Bergambar. All Rights Reserved.</small>
         </div>
-    </footer>
+    </footer> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection
+
+
+
