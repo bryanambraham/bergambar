@@ -44,9 +44,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::get('/artists/{id}/search', [ArtistController::class, 'search'])->name('artists.search');
 Route::get('/commissions', [CommissionController::class, 'create'])->name('commissions.index');
 Route::put('/commissions', [CommissionController::class, 'store'])->name('commissions.store');
 Route::post('/commissions', [CommissionController::class, 'store'])->name('commissions.store');
+
 // Menampilkan commission berdasarkan user_id
 Route::get('/commissions/user/{userId}', [CommissionController::class, 'showCommissionsByUser'])->name('commissions.byUser');
 Route::post('/commissions/love/{id}', [CommissionController::class, 'toggleLove'])->name('commissions.toggleLove');
@@ -71,6 +73,8 @@ Route::post('/send-message', [ChatController::class, 'sendMessage']);
 
 
 Route::get('/chats', [ChatController::class, 'index'])->name('chat.index');
+
+Route::post('/orders/{id}/confirm', [OrderController::class, 'confirmPayment'])->name('orders.confirmPayment');
 
 // Route::get('/chat/{user}', [ChatController::class, 'show'])->name('chat.show')->middleware('auth');
 

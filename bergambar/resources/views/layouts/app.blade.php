@@ -35,6 +35,7 @@
 <body style="background-color: #ffffff;">
     <div id="app">
     <!-- Navbar -->
+    <!-- Navbar -->
     <nav class="w-100 top-0 navbar navbar-expand-lg navbar-light shadow-sm" style="background-color: #ffffff;">
         <div class="container">
             <a class="navbar-brand" href="/">

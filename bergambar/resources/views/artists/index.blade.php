@@ -11,8 +11,13 @@
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h5 class="card-title fw-bold fst-italic">{{ $artist->name }}</h5>
-                        <p><strong class="fw-bold fst-italic">Email:</strong> {{ $artist->email }}</p>
+                    @foreach($artists as $artist)
+                        <a href="{{ route('artists.search', $artist->id) }}">
+                            <h5 class="card-title fw-bold fst-italic">{{ $artist->name }}</h5>
+                            <p><strong class="fw-bold fst-italic">Email:</strong> {{ $artist->email }}</p>
+                        </a>
+                    @endforeach
+                       
 
                         @foreach($artist->commissions as $commission)
                             <h6 class="mt-3 fw-bold fst-italic">Commission: {{ $commission->description }}</h6>

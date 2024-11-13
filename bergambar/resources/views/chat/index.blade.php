@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2>Your Messages</h2>
+<div class="container" style="margin-top: 1.5%">
+    <h2>Recent Messages</h2>
     
     <div class="list-group">
         @forelse($groupedChats as $userId => $chats)

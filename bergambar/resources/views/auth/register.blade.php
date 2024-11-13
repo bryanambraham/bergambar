@@ -2,13 +2,13 @@
 
 @section('content')
 <body style="background-color: #1e1e2a;">
-<div class="container">
+<div class="container" style="margin-top: 5%;">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card" style="background-color: #5d5875;">
+            <div class="card" style="background-color: #6B6B6B;">
                 <div class="card-header text-white fw-bold" >{{ __('Register') }}</div>
 
-                <div class="card-body text-white" style="background-color: #1e1e2a;">
+                <div class="card-body text-white" style="background-color: #999999;">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -83,10 +83,16 @@
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-6 offset-md-4 d-flex justify-content-start">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
+
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link text-white" href="/login">
+                                        {{ __('Have account? Click Here!') }}
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </form>

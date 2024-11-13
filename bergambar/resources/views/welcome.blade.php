@@ -138,7 +138,7 @@
                         </div>
                         <p class="card-text fw-medium">Made by: {{ $commission->user->name }}</p>
                         <p class="card-text">Status: {{ $commission->status }}</p>
-                        <p class="card-text">Price: ${{ $commission->total_price }}</p>
+                        <p class="card-text">Price:  Rp{{ number_format($commission->total_price, 0, ',', '.') }}</p>
                         @if($commission->image)
                             <img src="{{ asset('storage/' . $commission->image) }}" alt="Commission Image" class="img-fluid">
                         @endif
